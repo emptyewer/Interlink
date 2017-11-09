@@ -1,11 +1,15 @@
 #ifndef SPROCESSOR_H
 #define SPROCESSOR_H
+#include "support/includes+structs.h"
+#endif // SPROCESSOR_H
 
-
-class SProcessor
-{
+class SProcessor {
 public:
   SProcessor();
-};
+  ~SProcessor();
+  void parse_ms2(QString filename);
+  FILE *fileIn;
 
-#endif // SPROCESSOR_H
+private:
+  QVector<QString> split(std::string s);
+};

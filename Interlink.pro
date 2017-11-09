@@ -25,14 +25,11 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     graphwindow.h \
     analysiswindow.h \
-    support/helper.h \
-    support/includes.h \
     data/protein.h \
     data/spectra.h \
-    support/structs.h \
     processing/pprocessor.h \
-    support/constants.h \
-    processing/sprocessor.h
+    processing/sprocessor.h \
+    support/includes+structs.h
 
 FORMS    += mainwindow.ui \
     graphwindow.ui \
@@ -43,3 +40,11 @@ RESOURCES += \
 
 DISTFILES +=
 
+macx {
+    IFILE = $$OUT_PWD/Interlink.app/Contents/Info.plist
+    copyinfo.commands = $(COPY_FILE) $$PWD/Info.plist $$IFILE
+}
+
+
+LIBS += -L"/usr/local/Cellar/boost/1.65.1/lib"
+INCLUDEPATH += "/usr/local/Cellar/boost/1.65.1/include"

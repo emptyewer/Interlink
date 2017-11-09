@@ -1,6 +1,5 @@
 #include "mainwindow.h"
-#include "support/helper.h"
-#include "support/includes.h"
+#include "processing/sprocessor.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QTableWidgetItem>
@@ -14,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
   protein = new Protein(
       "/Users/Venky/Work/Softwares/Interlink/test_files/HDH_wt++.fasta");
   update_protein_changes();
+  SProcessor *s = new SProcessor();
+  s->parse_ms2("/Users/Venky/Work/Softwares/Interlink/test_files/"
+               "CM_151128_Elite_32_N94HDH_gel_band_UV_CID.ms2");
 }
 
 MainWindow::~MainWindow() {
@@ -23,7 +25,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_actionProtein_triggered() {
   protein = new Protein(QFileDialog::getOpenFileName(
-      this, tr("Protein Sequence"), Helper::get_homedirectory(),
+      this, tr("Protein Sequence"), get_homedirectory(),
       tr("FASTA (*.fasta *.fa)")));
   update_protein_changes();
 }
@@ -59,6 +61,19 @@ void MainWindow::update_protein_changes() {
   update_protein_data();
   update_peptides_list_table();
   protein->fragment_ions(charges, fragment_types_n, fragment_types_c);
+  update_fragments_list_table();
+}
+
+void MainWindow::update_fragments_list_table() {
+  QVector<Peptide *> peptides = protein->get_peptides();
+  aw->reset_fragments_list_table();
+  int len = peptides.length();
+  for (int i = 0; i < len; i++) {
+    Peptide *p = peptides.at(i);
+    if (p->crosslinker) {
+      aw->update_fragments_list_table(p->fragments);
+    }
+  }
 }
 
 void MainWindow::update_peptides_list_table() {
@@ -71,16 +86,16 @@ void MainWindow::update_peptides_list_table() {
   int count = 0;
   for (int i = 0; i < len; i++) {
     Peptide *p = peptides.at(i);
+    ui->peptides_list_table->insertRow(count);
+    item1 = new QTableWidgetItem(p->sequence);
+    item2 = new QTableWidgetItem(QString::number(p->mass, 'f', 6));
     if (p->crosslinker) {
-      ui->peptides_list_table->insertRow(count);
-      item1 = new QTableWidgetItem(p->sequence);
-      item2 = new QTableWidgetItem(QString::number(p->mass));
       item1->setForeground(Qt::red);
       item2->setForeground(Qt::red);
-      ui->peptides_list_table->setItem(count, 0, item1);
-      ui->peptides_list_table->setItem(count, 1, item2);
-      count += 1;
     }
+    ui->peptides_list_table->setItem(count, 0, item1);
+    ui->peptides_list_table->setItem(count, 1, item2);
+    count += 1;
   }
   set_peptides_list_table_column_names();
 }
@@ -90,6 +105,8 @@ void MainWindow::set_peptides_list_table_column_names() {
   labels << "Sequence"
          << "Mass";
   ui->peptides_list_table->setHorizontalHeaderLabels(labels);
+  ui->peptides_list_table->resizeRowsToContents();
+  ui->peptides_list_table->resizeColumnsToContents();
 }
 
 void MainWindow::reset_peptides_list_table() {
@@ -128,23 +145,23 @@ void MainWindow::read_values() {
     if (fragment_types_n.contains(A) == false) {
       fragment_types_n.append(A);
     }
-    if (fragment_types_n.contains(A_HYDRATED) == false) {
-      fragment_types_n.append(A_HYDRATED);
-    }
-    if (fragment_types_n.contains(A_AMIDATED) == false) {
-      fragment_types_n.append(A_AMIDATED);
-    }
+    //    if (fragment_types_n.contains(A_HYDRATED) == false) {
+    //      fragment_types_n.append(A_HYDRATED);
+    //    }
+    //    if (fragment_types_n.contains(A_AMIDATED) == false) {
+    //      fragment_types_n.append(A_AMIDATED);
+    //    }
   }
   if (ui->b->isChecked()) {
     if (fragment_types_n.contains(B) == false) {
       fragment_types_n.append(B);
     }
-    if (fragment_types_n.contains(B_HYDRATED) == false) {
-      fragment_types_n.append(B_HYDRATED);
-    }
-    if (fragment_types_n.contains(B_AMIDATED) == false) {
-      fragment_types_n.append(B_AMIDATED);
-    }
+    //    if (fragment_types_n.contains(B_HYDRATED) == false) {
+    //      fragment_types_n.append(B_HYDRATED);
+    //    }
+    //    if (fragment_types_n.contains(B_AMIDATED) == false) {
+    //      fragment_types_n.append(B_AMIDATED);
+    //    }
   }
   if (ui->c->isChecked()) {
     if (fragment_types_n.contains(C) == false) {
@@ -160,12 +177,12 @@ void MainWindow::read_values() {
     if (fragment_types_c.contains(Y) == false) {
       fragment_types_c.append(Y);
     }
-    if (fragment_types_c.contains(Y_HYDRATED) == false) {
-      fragment_types_c.append(Y_HYDRATED);
-    }
-    if (fragment_types_c.contains(Y_AMIDATED) == false) {
-      fragment_types_c.append(Y_AMIDATED);
-    }
+    //    if (fragment_types_c.contains(Y_HYDRATED) == false) {
+    //      fragment_types_c.append(Y_HYDRATED);
+    //    }
+    //    if (fragment_types_c.contains(Y_AMIDATED) == false) {
+    //      fragment_types_c.append(Y_AMIDATED);
+    //    }
   }
   if (ui->z->isChecked()) {
     if (fragment_types_c.contains(Z) == false) {
@@ -174,3 +191,5 @@ void MainWindow::read_values() {
   }
   qDebug() << fragment_types_n << fragment_types_c;
 }
+
+QString MainWindow::get_homedirectory() { return QDir::homePath(); }

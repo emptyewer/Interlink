@@ -1,8 +1,7 @@
 #ifndef PROTEIN_H
 #define PROTEIN_H
 #include "processing/pprocessor.h"
-#include "support/includes.h"
-#include "support/structs.h"
+#include "support/includes+structs.h"
 
 class Protein {
 

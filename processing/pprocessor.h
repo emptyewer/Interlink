@@ -1,7 +1,6 @@
 #ifndef PPROCESSOR_H
 #define PPROCESSOR_H
-#include "support/includes.h"
-#include "support/structs.h"
+#include "support/includes+structs.h"
 
 class PProcessor {
 public:

@@ -1,7 +1,7 @@
 #ifndef SPECTRA_H
 #define SPECTRA_H
 
-#include "support/includes.h"
+#include "support/includes+structs.h"
 
 class Spectra : public QObject {
   Q_OBJECT

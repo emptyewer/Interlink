@@ -1,6 +1,13 @@
+
 #ifndef STRUCTS_H
 #define STRUCTS_H
-#include "support/includes.h"
+#include <QDebug>
+#include <QDir>
+#include <QMap>
+#include <QObject>
+#include <QStandardPaths>
+#include <QVector>
+#include <iostream>
 
 struct NameSequence {
   QString name;
@@ -37,5 +44,22 @@ struct Peptide {
   bool crosslinker = false;
   QVector<Fragment *> fragments;
 };
+
+struct Peak {
+  double mass = 0.0;
+  double intensity = 0.0;
+};
+
+struct Scan {
+  int scan_number = 0;
+  double retention_time = 0.0;
+  double observed_mass = 0.0;
+  double intensity = 0.0;
+  int charge_state = 0;
+  double parent_mass = 0.0;
+  QVector<Peak *> peaks;
+};
+
+extern QMap<QString, double> aminoacids;
 
 #endif // STRUCTS_H

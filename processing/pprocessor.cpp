@@ -83,12 +83,15 @@ void PProcessor::fragment(QVector<Peptide *> *peptides, QList<int> charges,
                           QList<FragmentType> n_types,
                           QList<FragmentType> c_types) {
   int number_of_peptides = peptides->length();
-  Fragment *f = new Fragment;
   // Iterate through all the peptides in the list
   for (int i = 0; i < number_of_peptides; i++) {
     QString seq = peptides->at(i)->sequence;
     int seq_length = seq.length();
-    //    qDebug() << "######" << seq << "######";
+    bool print_frags = false;
+    if (seq == "BIETFHTAQK") {
+      qDebug() << "######" << seq << "######";
+      print_frags = true;
+    }
     // For each selected charge state iterate through
     foreach (int charge, charges) {
       // Sequentially fragment peptides into N-ter fragment and C-ter fragement
@@ -97,25 +100,29 @@ void PProcessor::fragment(QVector<Peptide *> *peptides, QList<int> charges,
         QString c_seq = seq.right(seq_length - mid);
         // For each fragment type calculate mass N-ter
         foreach (FragmentType n_type, n_types) {
+          Fragment *f = new Fragment;
           f->sequence = n_seq;
           f->type = n_type;
           f->mz_ratio = get_fragment_mass(n_seq, charge, n_type);
           f->charge = charge;
           peptides->at(i)->fragments.append(f);
-          //          qDebug() << "Seq: " << f->sequence << "m/z: " <<
-          //          f->mz_ratio
-          //                   << "Type: " << n_type << "Charge: " << f->charge;
+          if (print_frags) {
+            qDebug() << "Seq: " << f->sequence << "m/z: " << f->mz_ratio
+                     << "Type: " << f->type << "Charge: " << f->charge;
+          }
         }
         // For each fragment type calculate mass C-ter
         foreach (FragmentType c_type, c_types) {
+          Fragment *f = new Fragment;
           f->sequence = c_seq;
           f->type = c_type;
           f->mz_ratio = get_fragment_mass(c_seq, charge, c_type);
           f->charge = charge;
           peptides->at(i)->fragments.append(f);
-          //          qDebug() << "Seq: " << f->sequence << "m/z: " <<
-          //          f->mz_ratio
-          //                   << "Type: " << c_type << "Charge: " << f->charge;
+          if (print_frags) {
+            qDebug() << "Seq: " << f->sequence << "m/z: " << f->mz_ratio
+                     << "Type: " << f->type << "Charge: " << f->charge;
+          }
         }
       }
     }
@@ -160,12 +167,12 @@ double PProcessor::get_fragment_mass(QString sequence, int charge,
   if (type == A) {
     mass = mass - 27.9949;
   }
-  if (type == A_HYDRATED || type == B_HYDRATED || type == Y_HYDRATED) {
-    mass = mass - 18.0106;
-  }
-  if (type == A_AMIDATED || type == B_AMIDATED || type == Y_AMIDATED) {
-    mass = mass - 17.0266;
-  }
+  //  if (type == A_HYDRATED || type == B_HYDRATED || type == Y_HYDRATED) {
+  //    mass = mass - 18.0106;
+  //  }
+  //  if (type == A_AMIDATED || type == B_AMIDATED || type == Y_AMIDATED) {
+  //    mass = mass - 17.0266;
+  //  }
   if (type == C) {
     mass = mass + 1.0078 + 29.02134;
   }
