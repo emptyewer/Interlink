@@ -18,6 +18,9 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
 
+protected:
+  void closeEvent(QCloseEvent *event) override;
+
 private slots:
   void on_actionProtein_triggered();
   void on_actionUV_ms2_file_triggered();
@@ -33,6 +36,10 @@ private slots:
   void on_p1_clicked();
   void on_p12_clicked();
   void on_p123_clicked();
+
+  void on_find_x_ms2_peaks_clicked();
+
+  void on_find_binding_peptides_clicked();
 
 private:
   Ui::MainWindow *ui;

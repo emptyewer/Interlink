@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Interlink++ : Analysis Steps</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
@@ -72,12 +72,19 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>MS2 Scan Matches</string>
+        <string>Crosslinking Peptide &lt;-&gt; MS2 Peak Matches</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QTableWidget" name="tableWidget"/>
+      <widget class="QTableWidget" name="ms_peak_matches_table">
+       <attribute name="horizontalHeaderCascadingSectionResizes">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+      </widget>
      </item>
     </layout>
    </item>
@@ -86,7 +93,7 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Identified Binding Peptides</string>
+        <string>Binding Peptides</string>
        </property>
       </widget>
      </item>

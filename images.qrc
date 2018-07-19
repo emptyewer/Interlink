@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>infinity.png</file>
+        <file>images/infinity.png</file>
+        <file>images/import-blue.png</file>
+        <file>images/import-green.png</file>
+        <file>images/import-red.png</file>
     </qresource>
 </RCC>

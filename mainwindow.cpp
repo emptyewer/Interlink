@@ -7,20 +7,29 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
+  ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
   aw = new AnalysisWindow();
   aw->show();
   // REMOVE NEXT LINES
-  protein = new Protein(
-      "/Users/Venky/Work/Softwares/Interlink/test_files/HDH_wt++.fasta");
-  update_protein_changes();
-  SProcessor *s = new SProcessor();
-  s->parse_ms2("/Users/Venky/Work/Softwares/Interlink/test_files/"
-               "CM_151128_Elite_32_N94HDH_gel_band_UV_CID.ms2");
+  //  protein = new Protein(
+  //      "/Users/Venky/Work/Softwares/Interlink/test_files/HDH_wt++.fasta");
+  //  update_protein_changes();
+  //  SProcessor *s = new SProcessor();
+  //  //  s->parse_ms2("/Users/Venky/Work/Softwares/Interlink/test_files/"
+  //  //               "CM_151128_Elite_32_N94HDH_gel_band_UV_CID.ms2");
+  //  aw->add_one_cell();
 }
 
 MainWindow::~MainWindow() {
   delete aw;
   delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+  if (aw->isVisible()) {
+    aw->close();
+  }
+  QApplication::closeAllWindows();
 }
 
 void MainWindow::on_actionProtein_triggered() {
@@ -193,3 +202,7 @@ void MainWindow::read_values() {
 }
 
 QString MainWindow::get_homedirectory() { return QDir::homePath(); }
+
+void MainWindow::on_find_x_ms2_peaks_clicked() {}
+
+void MainWindow::on_find_binding_peptides_clicked() {}

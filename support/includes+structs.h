@@ -60,6 +60,11 @@ struct Scan {
   QVector<Peak *> peaks;
 };
 
+struct XPeak {
+  Scan *scan;
+  QVector<Peak *> matching_peaks;
+};
+
 extern QMap<QString, double> aminoacids;
 
 #endif // STRUCTS_H

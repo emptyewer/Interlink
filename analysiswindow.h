@@ -2,6 +2,7 @@
 #define ANALYSISWINDOW_H
 
 #include "support/includes+structs.h"
+#include "tablecell.h"
 #include <QWidget>
 
 namespace Ui {
@@ -19,8 +20,14 @@ public:
 
   void update_fragments_list_table(QVector<Fragment *> fragments);
 
+  void add_one_cell();
+
+protected:
+  void closeEvent(QCloseEvent *event) override;
+
 private:
   Ui::AnalysisWindow *ui;
+  QVector<QColor> colors;
   void format_fragments_list_table();
 };
 
