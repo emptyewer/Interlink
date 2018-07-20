@@ -65,5 +65,13 @@ macx {
     QMAKE_LFLAGS += -Bstatic
 }
 
+win32 {
+    LIBS += -L"C:\boost_1.67.0\lib"
+    INCLUDEPATH += "C:\boost_1.67.0\include\boost-1_67"
+    ICON = Icon.ico
+    RC_FILE = interlink.rc
+    QMAKE_POST_LINK += "C:\Qt\5.10.1\mingw53_32\bin\windeployqt C:\Users\Venky\build-Interlink-Desktop_Qt_5_10_1_MinGW_32bit-Release\release\Interlink++.exe"
+    QMAKE_LFLAGS += -static
+}
 
 
