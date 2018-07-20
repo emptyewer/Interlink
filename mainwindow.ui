@@ -34,7 +34,8 @@
      <widget class="QGroupBox" name="groupBox">
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <family>Arial</family>
+        <pointsize>11</pointsize>
        </font>
       </property>
       <property name="title">
@@ -175,7 +176,7 @@
        <widget class="QGroupBox" name="ion_type_group">
         <property name="font">
          <font>
-          <pointsize>12</pointsize>
+          <pointsize>11</pointsize>
          </font>
         </property>
         <property name="title">
@@ -256,7 +257,7 @@
        <widget class="QGroupBox" name="charage_state_group">
         <property name="font">
          <font>
-          <pointsize>12</pointsize>
+          <pointsize>11</pointsize>
          </font>
         </property>
         <property name="title">
@@ -313,7 +314,7 @@
        <widget class="QGroupBox" name="match_criteria">
         <property name="font">
          <font>
-          <pointsize>12</pointsize>
+          <pointsize>11</pointsize>
          </font>
         </property>
         <property name="title">
@@ -420,7 +421,7 @@
      <x>0</x>
      <y>0</y>
      <width>700</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuImport">
